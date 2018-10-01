@@ -46,9 +46,9 @@ Route::get('/database', function () {
     $db = 'tasks';
 
     // here's some magic connection stuff using Illuminate
-    $db_tasks = DB::table('tasks')
-        ->latest()
-        ->get();
+    //$db_tasks = DB::table('tasks')->latest()->get();
+    // get it the Eloquent way
+    $db_tasks = App\Task::latest()->get();
 
     //print $db_tasks;
 
@@ -73,9 +73,32 @@ Route::get('/database/json', function () {
 });
 
 Route::get('/database/{id}', function ($id) {
-    $db_task = DB::table('tasks')->find($id);
+    function progressStatus($db)
+    {
+        // this function is for when the task has bee found
 
-    //dd($db_task->{'in progress'});
+        if ($db->{'in progress'} == 0 && $db->completed == 0) {
+            return 0;
+        } elseif ($db->{'in progress'} == 1 && $db->completed == 0) {
+            return 1;
+        } elseif ($db->{'in progress'} == 0 && $db->completed == 1) {
+            return 2;
+        }
+    }
+    // normal db query method
+    //$db_task = DB::table('tasks')->find($id);
+    // model method using Eloquent
 
-    return view('database/show', ["db" => $db_task]);
+    $db = App\Task::find($id);
+    $progress = progressStatus($db);
+
+    //dd($progress);
+
+    return view('database/show', compact('db', 'progress'));
+});
+
+Route::get('/inspirations', function () {
+    $db = App\Inspiration::all();
+
+    dd($db);
 });

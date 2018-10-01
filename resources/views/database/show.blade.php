@@ -95,6 +95,11 @@
         }
 
         .in-progress {
+            background-color: lightsalmon;
+            color: whitesmoke;
+        }
+
+        .completed {
             background-color: mediumaquamarine;
             color: whitesmoke;
         }
@@ -147,10 +152,12 @@
             </div>
             <div class="text-block">
 
-                @if ($db->{'in progress'} == 0)
+                @if ($progress == 0)
                 <p class="detail-block d-progress not-started">not started</p>
-                @else
+                @elseif ($progress == 1)
                 <p class="detail-block d-progress in-progress">in progress</p>
+                @elseif ($progress == 2)
+                <p class="detail-block d-progress completed">completed!</p>
                 @endif
 
 

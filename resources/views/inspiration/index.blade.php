@@ -131,7 +131,7 @@
 
         <div class="content">
             <div class="title m-b-md">
-                <a href="/">Database <span style="font-size:20px">calls</span></a>
+                <a href="/">inspiration .</a>
             </div>
 
             <!-- blade (laravel) method using @ -->
